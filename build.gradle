@@ -1,0 +1,28 @@
+apply plugin: 'scala'
+apply plugin: 'application'
+
+sourceSets {
+    main.scala.srcDirs = ["src/main/scala"]
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    /* Scala */
+    compile 'org.scala-lang:scala-library:2.11.12'
+    compile group: 'org.scala-lang', name: 'scala-compiler', version: '2.11.12'
+
+    /* Unit Testing */
+    testCompile 'org.scalatest:scalatest_2.11:3.0.0'
+    testCompile 'junit:junit:4.12'
+
+    /* Logging */
+    compile group: 'org.slf4j', name:'slf4j-simple', version: '1.7.25'
+}
+
+mainClassName = 'scala.donscript.Interpreter'
+archivesBaseName = 'DonScript'
