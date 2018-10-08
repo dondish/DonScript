@@ -1,8 +1,11 @@
 package scala.donscript.entities
 
+import scala.donscript.Scope
+
 /**
   * This is the Array, the most basic data structure
+ *
   * @param args the arguments it is made of
   */
-case class DonArray(args: Array[String]) extends Entity(args) {
+case class DonArray(override var args: Array[String], scope: Scope) extends Entity(args, scope) {
 }

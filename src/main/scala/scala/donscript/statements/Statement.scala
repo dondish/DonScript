@@ -1,12 +1,15 @@
 package scala.donscript.statements
 
 import scala.collection.mutable
+import scala.donscript.Scope
 import scala.donscript.entities.Entity
 
 trait Statement {
   var args: Array[String]
 
-  def vars: mutable.HashMap[String, Entity]
+  var vars: mutable.HashMap[String, Entity]
 
-  def run: Int
+  var scope: Scope
+
+  def run: ParseResult
 }

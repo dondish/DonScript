@@ -1,17 +1,18 @@
 package scala.donscript
 
 import scala.collection.mutable
+import scala.donscript.commands.Command
+import scala.donscript.entities.Entity
 import scala.donscript.statements.Parser
 
 class Interpreter {
+  val scope = new Scope
+  var commands = Map[String, Command]()
+  val vars = new mutable.HashMap[String, Entity]()
 
   def interpret(code: String): Int = {
-    var scope = 0
-    var scopepos = 0
-    var scopet = 0
-    var commands = Map()
     for (statement <- code.split("(?!/);")) {
-      Parser.parse(statement)
+      Parser.parse(statement, scope, vars, commands)
 
     }
   }
