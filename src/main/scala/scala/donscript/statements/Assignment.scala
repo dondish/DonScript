@@ -16,6 +16,6 @@ case class Assignment(args: Array[String], var vars: mutable.HashMap[String, Ent
     val name = args(0)
     val value = Entity.assign(args.slice(1, args.length), scope)
     vars += ((name, value))
-    ParseResult()
+    ParseResult(scope, vars)
   }
 }

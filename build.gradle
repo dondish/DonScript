@@ -13,11 +13,11 @@ repositories {
 
 dependencies {
     /* Scala */
-    compile 'org.scala-lang:scala-library:2.11.12'
-    compile group: 'org.scala-lang', name: 'scala-compiler', version: '2.11.12'
+    compile 'org.scala-lang:scala-library:2.12.7'
+    compile group: 'org.scala-lang', name: 'scala-compiler', version: '2.12.7'
 
     /* Unit Testing */
-    testCompile 'org.scalatest:scalatest_2.11:3.0.0'
+    testCompile 'org.scalatest:scalatest_2.12:3.0.0'
     testCompile 'junit:junit:4.12'
 
     /* Logging */
