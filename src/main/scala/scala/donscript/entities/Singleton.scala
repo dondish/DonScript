@@ -10,4 +10,18 @@ import scala.donscript.Scope
   */
 case class Singleton(override var args: Array[String], scope: Scope) extends Entity(args, scope) {
 
+  def getValue: Either[Double, String] = {
+    val decimal = """(\d+\.?\d*)""".r
+    args(0) match {
+      case decimal(num) => Left(num.toDouble)
+      case x => Right(x)
+    }
+  }
+
+  def +(singleton: Singleton): Entity = {
+    (getValue, singleton.getValue) match {
+      case (Left(x), Left(y)) => Entity.assign(Array((x+y).toString), scope)
+      case (_, _) => super.+(singleton)
+    }
+  }
 }

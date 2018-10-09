@@ -9,6 +9,18 @@ import scala.donscript.Scope
   */
 abstract class Entity(var args: Array[String], scope: Scope) {
 
+  def +(entity: Entity): Entity = {
+    Entity.assign(args ++ entity.args, scope)
+  }
+
+  def -(entity: Entity): Entity = {
+    Entity.assign(args.diff(entity.args), scope)
+  }
+
+  def equals(entity: Entity): Boolean = {
+    args == entity.args
+  }
+
   /**
     * Used for insertion
     * @return the entity as a string
