@@ -24,4 +24,11 @@ case class Singleton(override var args: Array[String], scope: Scope) extends Ent
       case (_, _) => super.+(singleton)
     }
   }
+
+  def -(singleton: Singleton): Entity = {
+    (getValue, singleton.getValue) match {
+      case (Left(x), Left(y)) => Entity.assign(Array((x-y).toString), scope)
+      case (_, _) => super.-(singleton)
+    }
+  }
 }

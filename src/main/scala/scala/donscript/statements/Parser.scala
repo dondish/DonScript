@@ -28,14 +28,38 @@ object Parser {
     }
   }
 
+  /**
+    * Unescapes argument
+    * @param arg the argument
+    * @return a value unescaped
+    */
   def unescape(arg: String): String = {
-    ""
+    val stringBuilder: mutable.StringBuilder = new mutable.StringBuilder()
+    var prev: Boolean = false
+    for (chr <- arg.toCharArray) {
+      if (prev) {
+        if (chr == 't') {
+          stringBuilder.append('\t')
+        } else if (chr == 'n') {
+          stringBuilder.append('\n')
+        } else {
+          stringBuilder.append(chr)
+        }
+      } else {
+        if (chr == '/') {
+          prev = true
+        } else {
+          stringBuilder.append(chr)
+        }
+      }
+    }
+    stringBuilder.toString()
   }
 
   /**
-    * This parses the arguments and auto inserts entities while
-    * @param args
-    * @param vars
+    * This parses the arguments and auto inserts entities
+    * @param args the arguments
+    * @param vars the map of vars to entities
     * @return
     */
   def parseArgs(args: Array[String], vars: mutable.HashMap[String, Entity]): Array[String] = {

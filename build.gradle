@@ -3,6 +3,7 @@ apply plugin: 'application'
 
 sourceSets {
     main.scala.srcDirs = ["src/main/scala"]
+    test.scala.srcDirs = ["src/test/scala"]
 }
 
 repositories {

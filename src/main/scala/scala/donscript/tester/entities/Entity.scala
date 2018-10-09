@@ -1,11 +1,10 @@
-package scala.donscript.entities
+package scala.donscript.tester.entities
 
 import scala.donscript.Scope
 
-
 /**
   * An abstract entity
-  *
+ *
   * @param args the arguments it is made of
   */
 abstract class Entity(var args: Array[String], scope: Scope) {
