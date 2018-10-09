@@ -9,8 +9,8 @@ import scala.donscript.entities.Entity
   * @param args arguments to the statement
   * @param vars the variables
   */
-case class Assignment(args: Array[String], var vars: mutable.HashMap[String, Entity], scope: Scope) extends Statement {
-  override def run: ParseResult = {
+case class Assignment() extends Statement {
+  override def run(args: Array[String], vars: mutable.HashMap[String, Entity], scope: Scope): ParseResult = {
     if (args.isEmpty)
       return ParseResult(scope, vars)
     val name = args(0)

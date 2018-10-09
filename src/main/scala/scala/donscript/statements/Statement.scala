@@ -5,11 +5,5 @@ import scala.donscript.Scope
 import scala.donscript.entities.Entity
 
 trait Statement {
-  var args: Array[String]
-
-  var vars: mutable.HashMap[String, Entity]
-
-  var scope: Scope
-
-  def run: ParseResult
+  def run(args: Array[String], vars: mutable.HashMap[String, Entity], scope: Scope): ParseResult
 }

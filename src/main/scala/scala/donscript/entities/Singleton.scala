@@ -8,7 +8,7 @@ import scala.donscript.Scope
  *
   * @param args the arguments it is made of
   */
-case class Singleton(override var args: Array[String], scope: Scope) extends Entity(args, scope) {
+case class Singleton(override val args: Array[String], scope: Scope) extends Entity(args, scope) {
 
   def getValue: Either[Double, String] = {
     val decimal = """(\d+\.?\d*)""".r

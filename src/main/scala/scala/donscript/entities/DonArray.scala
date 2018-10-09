@@ -7,5 +7,5 @@ import scala.donscript.Scope
  *
   * @param args the arguments it is made of
   */
-case class DonArray(override var args: Array[String], scope: Scope) extends Entity(args, scope) {
+case class DonArray(override val args: Array[String], scope: Scope) extends Entity(args, scope) {
 }
