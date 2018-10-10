@@ -27,7 +27,7 @@ class Tester extends FunSuite {
 
   test("Printing") {
     val x: Interpreter = new Interpreter(x=>print(x), ()=>scala.io.StdIn.readLine())
-    x.interpret(":as Testing Variable Printing!;> :as;>> :as")
+     x.interpret(":as Testing Variable Printing!;> :as /n;>> :as")
   }
 
   test("Exit at scope -1") {

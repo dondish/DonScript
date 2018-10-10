@@ -4,7 +4,6 @@ import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 import scala.donscript.Scope
 import scala.donscript.commands.Command
-import scala.donscript.entities.Entity
 
 /**
   * This object parses data and returns the result needed
@@ -19,7 +18,7 @@ object Parser {
     if (statement.isEmpty) {
       if (scope.backward()) return ParseResult(scope, 1)
     }
-    val args = parseArgs(statement drop 1 split "(?<!/)\\s+", scope)
+    val args = parseArgs(statement drop 1 dropWhile Character.isSpaceChar split "(?<!/)\\s+", scope)
     statement.charAt(0) match {
       case ':' =>
         Assignment().run(args, scope)
