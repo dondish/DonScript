@@ -15,10 +15,10 @@ case class Assignment() extends Statement {
     */
   override def run(args: Array[String], scope: Scope): ParseResult = {
     if (args.isEmpty)
-      return ParseResult(scope)
+      return ParseResult(scope, 0)
     val name = args(0)
     val value = Entity.assign(args.slice(1, args.length), scope)
     scope.setVar(name, value)
-    ParseResult(scope)
+    ParseResult(scope, 0)
   }
 }

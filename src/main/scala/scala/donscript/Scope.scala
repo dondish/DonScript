@@ -9,9 +9,14 @@ import scala.donscript.entities.Entity
   * @param inputGiver stdin
   */
 class Scope(val printer: String => Unit, val inputGiver: () => String) {
+  /**
+    * The current scope
+    */
   var scope: Int = 0
   val scopet = new mutable.ArrayStack[Int]()
+  scopet.push(1) // default scope type is 1 for a normal block
   val scopepos = new mutable.ArrayStack[Int]()
+  scopepos.push(0) // default scope position is 0
   val vars = new mutable.ArrayStack[mutable.HashMap[String, Entity]]()
   vars.push(new mutable.HashMap[String, Entity]())
 
@@ -21,15 +26,17 @@ class Scope(val printer: String => Unit, val inputGiver: () => String) {
     * else -> out
     * block -> out
     */
-  def backward(): Unit = {
+  def backward(): Boolean = {
     val pos = scopepos.pop
     val t = scopet.pop
     if (pos + 1 == t) {
       scope -= 1
+      if (scope < 0) return true
     } else {
       scopepos.push(pos + 1)
       scopet.push(t)
     }
+    false
   }
 
   /**

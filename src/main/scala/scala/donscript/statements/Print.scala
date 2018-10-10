@@ -9,6 +9,6 @@ case class Print() extends Statement {
     } else {
       scope.printer(Entity.assign(args, scope).toString)
     }
-    ParseResult(scope)
+    ParseResult(scope, 0)
   }
 }

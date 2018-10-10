@@ -17,7 +17,7 @@ object Parser {
     */
   def parse(statement: String, scope: Scope,  commands: Map[String, Command]): ParseResult = {
     if (statement.isEmpty) {
-      scope.backward()
+      if (scope.backward()) return ParseResult(scope, 1)
     }
     val args = parseArgs(statement drop 1 split "(?<!/)\\s+", scope)
     statement.charAt(0) match {
@@ -25,7 +25,7 @@ object Parser {
         Assignment().run(args, scope)
       case '>' =>
         Print().run(args, scope)
-      case _ => ParseResult(scope)
+      case _ => ParseResult(scope, 0)
     }
   }
 
@@ -61,7 +61,7 @@ object Parser {
   /**
     * This parses the arguments and auto inserts entities
     * @param args the arguments
-    * @param vars the map of vars to entities
+    * @param scope the scope
     * @return
     */
   def parseArgs(args: Array[String], scope: Scope): Array[String] = {

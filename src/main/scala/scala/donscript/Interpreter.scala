@@ -22,6 +22,9 @@ class Interpreter(private val printer: String => Unit, private val inputGiver: (
     for (statement <- code.split("(?<!/)\\s*(?<!/);\\s*")) {
       val result = Parser.parse(statement, scope, commands)
       scope = result.scope
+      if (result.exit != 0) {
+        return result.exit
+      }
     }
     0
   }
