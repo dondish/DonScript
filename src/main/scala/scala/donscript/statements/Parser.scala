@@ -23,7 +23,8 @@ object Parser {
     statement.charAt(0) match {
       case ':' =>
         Assignment().run(args, scope)
-        ParseResult(scope)
+      case '>' =>
+        Print().run(args, scope)
       case _ => ParseResult(scope)
     }
   }
