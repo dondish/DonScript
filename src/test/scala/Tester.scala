@@ -34,4 +34,40 @@ class Tester extends FunSuite {
     val x: Interpreter = new Interpreter(x=>print(x), ()=>scala.io.StdIn.readLine())
     x.interpret(";>> Should not print this!")
   }
+  test("Conditional") {
+    val x: Interpreter = new Interpreter(x=>print(x), ()=>scala.io.StdIn.readLine())
+
+    // Number Equality
+
+    x.interpret("?1 = 1;>> Equals1 V;;>> Equals1 X;;>> After if block")
+    x.interpret("?1 = 2;>> Equals2 X;;>> Equals2 V;;")
+
+    x.interpret("?1 != 1;>> NEquals1 X;;>> NEquals1 V;;")
+    x.interpret("?1 != 2;>> NEquals2 V;;>> NEquals2 X;;")
+
+    x.interpret("?1 > 2;>> Bigthen1 X;;>> Bigthen1 V;;")
+    x.interpret("?1 < 2;>> Bigthen2 V;;>> Bigthen2 X;;")
+
+    // Array Equality
+
+    x.interpret("?1 2 3 = 1 2 3;>> Equals1 V;;>> Equals1 X;;")
+    x.interpret("?1 2 3 = 1 3 2;>> Equals2 X;;>> Equals2 V;;")
+
+    x.interpret("?1 2 3 != 1 2 3;>> Should not print this;;>> Should print this;;")
+    x.interpret("?1 2 3 != 1 3 2;>> Should print this;;>> Should not print this;;")
+
+    x.interpret("?1 2 3 > 2 1 3;>> Should not print this;;>> Should print this;;")
+
+    x.interpret("?1 2 3 < 2 1 3;>> Should print this;;>> Should not print this;;")
+
+    x.interpret("?1 2 >> 1 2 3;>> Should not print this;;>> Should print this;;")
+    x.interpret("?1 2 3 >> 1 2;>> Should print this;;>> Should not print this;;")
+
+    x.interpret("?1 2 3 << 1 2;>> Should not print this;;>> Should print this;;")
+    x.interpret("?1 2 << 1 2 3;>> Should print this;;>> Should not print this;;")
+
+    // Nested Conditionals
+
+    x.interpret("?1 = 1;?1 = 1;>> Should print this;;Should not print this;;Should not print this;;Should not print this;;")
+  }
 }

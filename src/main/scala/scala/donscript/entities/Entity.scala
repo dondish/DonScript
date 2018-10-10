@@ -9,7 +9,7 @@ import scala.donscript.Scope
   *
   * @param args the arguments it is made of
   */
-abstract class Entity(val args: Array[String], scope: Scope) {
+abstract class Entity(val args: Array[String], scope: Scope) extends Ordered[Entity] {
 
   def +(entity: Entity): Entity = {
     Entity.assign(args ++ entity.args, scope)
@@ -19,8 +19,21 @@ abstract class Entity(val args: Array[String], scope: Scope) {
     Entity.assign(args.diff(entity.args), scope)
   }
 
-  def equals(entity: Entity): Boolean = {
-    args sameElements entity.args
+  override def equals(o: Any): Boolean = {
+    o match {
+      case entity: Entity => args sameElements entity.args
+      case _ => false
+    }
+  }
+
+  override def compare(that: Entity): Int = {
+    if (args.length - that.args.length != 0) return args.length - that.args.length
+    for (arg <- args;thatarg <- that.args) {
+      if (arg.compareTo(thatarg) != 0) {
+        return arg.compareTo(thatarg)
+      }
+    }
+    0
   }
 
   /**

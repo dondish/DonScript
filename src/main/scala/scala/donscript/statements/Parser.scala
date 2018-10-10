@@ -15,15 +15,18 @@ object Parser {
     * @return amount to change the scope
     */
   def parse(statement: String, scope: Scope,  commands: Map[String, Command]): ParseResult = {
-    if (statement.isEmpty) {
-      if (scope.backward()) return ParseResult(scope, 1)
+    if (statement.length == 0) {
+      return ParseResult(scope, if (scope.backward()) 1 else 0)
     }
+    if (!scope.shouldRun) return ParseResult(scope, 0)
     val args = parseArgs(statement drop 1 dropWhile Character.isSpaceChar split "(?<!/)\\s+", scope)
     statement.charAt(0) match {
       case ':' =>
         Assignment().run(args, scope)
       case '>' =>
         Print().run(args, scope)
+      case '?' =>
+        Conditional().run(args, scope)
       case _ => ParseResult(scope, 0)
     }
   }

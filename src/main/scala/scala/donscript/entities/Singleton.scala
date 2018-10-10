@@ -11,7 +11,7 @@ import scala.donscript.Scope
 case class Singleton(override val args: Array[String], scope: Scope) extends Entity(args, scope) {
 
   def getValue: Either[Double, String] = {
-    val decimal = """(\d+\.?\d*)""".r
+    val decimal = """^(\d+\.?\d*)$""".r
     args(0) match {
       case decimal(num) => Left(num.toDouble)
       case x => Right(x)
@@ -29,6 +29,13 @@ case class Singleton(override val args: Array[String], scope: Scope) extends Ent
     (getValue, singleton.getValue) match {
       case (Left(x), Left(y)) => Entity.assign(Array((x-y).toString), scope)
       case (_, _) => super.-(singleton)
+    }
+  }
+
+  def compare(that: Singleton): Int = {
+    (getValue, that.getValue) match {
+      case (Left(x), Left(y)) => x.compareTo(y)
+      case (_, _) => super.compare(that)
     }
   }
 }
