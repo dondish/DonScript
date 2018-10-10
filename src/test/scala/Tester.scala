@@ -68,6 +68,16 @@ class Tester extends FunSuite {
 
     // Nested Conditionals
 
-    x.interpret("?1 = 1;?1 = 1;>> Should print this;;Should not print this;;Should not print this;;Should not print this;;")
+    x.interpret(
+      "?1 = 1;" +
+        "?1 = 1;" +
+          ">> Should print this;" +
+        ";" +
+          ">> Should not print this;" +
+        ";" +
+        ">> Should not print this;" +
+      ";" +
+        ">> Should not print this;" +
+      ";")
   }
 }
