@@ -15,16 +15,16 @@ object Parser {
     * @param statement the statement given
     * @return amount to change the scope
     */
-  def parse(statement: String, scope: Scope, vars: mutable.HashMap[String, Entity], commands: Map[String, Command]): ParseResult = {
+  def parse(statement: String, scope: Scope,  commands: Map[String, Command]): ParseResult = {
     if (statement.isEmpty) {
       scope.backward()
     }
-    val args = parseArgs(statement drop 1 split "(?!/)\\s+", vars, scope)
+    val args = parseArgs(statement drop 1 split "(?<!/)\\s+", scope)
     statement.charAt(0) match {
       case ':' =>
-        Assignment().run(args, vars, scope)
-        ParseResult(scope, vars)
-      case _ => ParseResult(scope, vars)
+        Assignment().run(args, scope)
+        ParseResult(scope)
+      case _ => ParseResult(scope)
     }
   }
 
@@ -45,6 +45,7 @@ object Parser {
         } else {
           stringBuilder.append(chr)
         }
+        prev = false
       } else {
         if (chr == '/') {
           prev = true
@@ -62,13 +63,11 @@ object Parser {
     * @param vars the map of vars to entities
     * @return
     */
-  def parseArgs(args: Array[String], vars: mutable.HashMap[String, Entity], scope: Scope): Array[String] = {
-    println(args)
+  def parseArgs(args: Array[String], scope: Scope): Array[String] = {
     val arrayBuffer: ArrayBuffer[String] = new ArrayBuffer[String]()
     for (arg <- args) {
-      println(arg)
       if (arg.startsWith(":")) {
-        arrayBuffer ++= vars.getOrElse(arg drop 1, Entity.assign(Array(), scope)).args
+        arrayBuffer ++= scope.getVar(arg drop 1).args
       } else  {
         arrayBuffer += unescape(arg)
       }

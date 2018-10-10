@@ -8,12 +8,10 @@ import scala.donscript.statements.Parser
 class Interpreter(private val printer: String => Unit, private val inputGiver: () => String) {
   var scope = new Scope
   var commands: Map[String, Command] = Map[String, Command]()
-  var vars = new mutable.HashMap[String, Entity]()
 
   def interpret(code: String): Int = {
     for (statement <- code.split("(?!/);")) {
-      val result = Parser.parse(statement, scope, vars, commands)
-      vars = result.vars
+      val result = Parser.parse(statement, scope, commands)
       scope = result.scope
     }
     0
