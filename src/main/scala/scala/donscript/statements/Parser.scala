@@ -19,7 +19,7 @@ object Parser {
     if (statement.isEmpty) {
       scope.backward()
     }
-    val args = parseArgs(statement drop 1 split "(?!/)\\s+", vars)
+    val args = parseArgs(statement drop 1 split "(?!/)\\s+", vars, scope)
     statement.charAt(0) match {
       case ':' =>
         Assignment().run(args, vars, scope)
@@ -62,13 +62,15 @@ object Parser {
     * @param vars the map of vars to entities
     * @return
     */
-  def parseArgs(args: Array[String], vars: mutable.HashMap[String, Entity]): Array[String] = {
+  def parseArgs(args: Array[String], vars: mutable.HashMap[String, Entity], scope: Scope): Array[String] = {
+    println(args)
     val arrayBuffer: ArrayBuffer[String] = new ArrayBuffer[String]()
     for (arg <- args) {
-      if (arg.startsWith(":") && vars.contains(arg drop 1)) {
-        arrayBuffer ++= vars(arg drop 1).args
-      } else {
-        arrayBuffer += unescape(arg drop 1)
+      println(arg)
+      if (arg.startsWith(":")) {
+        arrayBuffer ++= vars.getOrElse(arg drop 1, Entity.assign(Array(), scope)).args
+      } else  {
+        arrayBuffer += unescape(arg)
       }
     }
     arrayBuffer.toArray

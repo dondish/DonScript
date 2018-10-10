@@ -16,6 +16,9 @@ case class Assignment() extends Statement {
     val name = args(0)
     val value = Entity.assign(args.slice(1, args.length), scope)
     vars += ((name, value))
+    println(name)
+    println(value)
+    println(vars.mkString(", "))
     ParseResult(scope, vars)
   }
 }

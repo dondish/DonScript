@@ -37,7 +37,9 @@ abstract class Entity(val args: Array[String], scope: Scope) {
   */
 object Entity {
   def assign(args: Array[String], scope: Scope): Entity = {
-    if (args.length == 1) return Singleton(args, scope)
-    DonArray(args, scope)
+    args match {
+      case Array(_) => Singleton(args, scope)
+      case _ => DonArray(args, scope)
+    }
   }
 }
