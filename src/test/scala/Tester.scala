@@ -41,6 +41,7 @@ class Tester extends FunSuite {
 
     x.interpret("?1 = 1;>> Equals1 V;;>> Equals1 X;;>> After if block")
     x.interpret("?1 = 2;>> Equals2 X;;>> Equals2 V;;")
+    println(x.scope.scope, x.scope.scopet.top, x.scope.scopepos.top)
 
     x.interpret("?1 != 1;>> NEquals1 X;;>> NEquals1 V;;")
     x.interpret("?1 != 2;>> NEquals2 V;;>> NEquals2 X;;")
@@ -50,6 +51,7 @@ class Tester extends FunSuite {
 
     // Array Equality
 
+    println(x.scope.scope, x.scope.scopet.top, x.scope.scopepos.top)
     x.interpret("?1 2 3 = 1 2 3;>> Equals1 V;;>> Equals1 X;;")
     x.interpret("?1 2 3 = 1 3 2;>> Equals2 X;;>> Equals2 V;;")
 

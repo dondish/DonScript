@@ -29,6 +29,6 @@ case class Conditional() extends Statement {
         case "<<" => scope.forward(2, (left diff (right drop 1)).isEmpty)
       }
     }
-    ParseResult(scope, 0)
+    ParseResult(0)
   }
 }

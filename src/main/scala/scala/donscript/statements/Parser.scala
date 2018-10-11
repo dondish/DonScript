@@ -16,9 +16,9 @@ object Parser {
     */
   def parse(statement: String, scope: Scope,  commands: Map[String, Command]): ParseResult = {
     if (statement.length == 0) {
-      return ParseResult(scope, if (scope.backward()) 1 else 0)
+      return ParseResult(if (scope.backward()) 1 else 0)
     }
-    if (!scope.shouldRun) return ParseResult(scope, 0)
+    if (!scope.shouldRun) return ParseResult(0)
     val args = parseArgs(statement drop 1 dropWhile Character.isSpaceChar split "(?<!/)\\s+", scope)
     statement.charAt(0) match {
       case ':' =>
@@ -27,7 +27,7 @@ object Parser {
         Print().run(args, scope)
       case '?' =>
         Conditional().run(args, scope)
-      case _ => ParseResult(scope, 0)
+      case _ => ParseResult(0)
     }
   }
 

@@ -12,7 +12,6 @@ class Scope(val printer: String => Unit, val inputGiver: () => String) {
   /**
     * The current scope
     */
-  var scope: Int = 0
   val scopet = new mutable.ArrayStack[Int]()
   scopet.push(1) // default scope type is 1 for a normal block
   val scopepos = new mutable.ArrayStack[Int]()
@@ -21,6 +20,7 @@ class Scope(val printer: String => Unit, val inputGiver: () => String) {
   vars.push(new mutable.HashMap[String, Entity]())
   val conditions = new mutable.ArrayStack[Boolean]()
   conditions.push(true)
+  def scope: Int = scopet.length - 1
 
   /**
     * Goes backwards in the scope
@@ -33,7 +33,6 @@ class Scope(val printer: String => Unit, val inputGiver: () => String) {
     val t = scopet.pop
     val condition = conditions.pop
     if (pos + 1 == t) {
-      scope -= 1
       if (scope < 0) return true
     } else {
       conditions.push(!condition)
@@ -49,7 +48,6 @@ class Scope(val printer: String => Unit, val inputGiver: () => String) {
     * @param condition Whether the following statement should be executed
     */
   def forward(t: Int, condition: Boolean = true): Unit = {
-    scope += 1
     scopet.push(t)
     scopepos.push(0)
     conditions.push(condition)
