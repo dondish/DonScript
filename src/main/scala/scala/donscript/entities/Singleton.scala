@@ -20,14 +20,14 @@ case class Singleton(override val args: Array[String], scope: Scope) extends Ent
 
   def +(singleton: Singleton): Entity = {
     (getValue, singleton.getValue) match {
-      case (Left(x), Left(y)) => Entity.assign(Array((x+y).toString), scope)
+      case (Left(x), Left(y)) => Entity(Array((x+y).toString), scope)
       case (_, _) => super.+(singleton)
     }
   }
 
   def -(singleton: Singleton): Entity = {
     (getValue, singleton.getValue) match {
-      case (Left(x), Left(y)) => Entity.assign(Array((x-y).toString), scope)
+      case (Left(x), Left(y)) => Entity(Array((x-y).toString), scope)
       case (_, _) => super.-(singleton)
     }
   }

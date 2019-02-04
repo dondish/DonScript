@@ -10,36 +10,55 @@ import scala.donscript.entities.Entity
   */
 class Scope(val printer: String => Unit, val inputGiver: () => String) {
   /**
-    * The current scope
+    * The scope types
     */
-  val scopet = new mutable.ArrayStack[Int]()
-  scopet.push(1) // default scope type is 1 for a normal block
-  val scopepos = new mutable.ArrayStack[Int]()
-  scopepos.push(0) // default scope position is 0
+  val scopeTypes = new mutable.ArrayStack[Int]()
+
+  scopeTypes.push(1) // default scope type is 1 for a normal block
+
+  /**
+    * The positions in each scope
+    */
+  val scopePositions = new mutable.ArrayStack[Int]()
+
+  scopePositions.push(0) // default scope position is 0
+
+  /**
+    * Variables per scope
+    */
   val vars = new mutable.ArrayStack[mutable.HashMap[String, Entity]]()
-  vars.push(new mutable.HashMap[String, Entity]())
+
+  vars.push(new mutable.HashMap[String, Entity]()) // Add the global scope
+
+  /**
+    * The current condition of a scope
+    */
   val conditions = new mutable.ArrayStack[Boolean]()
   conditions.push(true)
-  def scope: Int = scopet.length - 1
+
+  def scope: Int = scopeTypes.length - 1
 
   /**
     * Goes backwards in the scope
     * if -> else
     * else -> out
     * block -> out
+    * @return whether should exit completely
     */
   def backward(): Boolean = {
-    val pos = scopepos.pop
-    val t = scopet.pop
+    val pos = scopePositions.pop
+    val t = scopeTypes.pop
     val condition = conditions.pop
-    if (pos + 1 == t) {
-      if (scope < 0) return true
-    } else {
+    if (pos + 1 == t && scope < 0) {
+      true
+    } else if (pos + 1 != t){
       conditions.push(!condition)
-      scopepos.push(pos + 1)
-      scopet.push(t)
+      scopePositions.push(pos + 1)
+      scopeTypes.push(t)
+      false
+    } else {
+      false
     }
-    false
   }
 
   /**
@@ -48,8 +67,8 @@ class Scope(val printer: String => Unit, val inputGiver: () => String) {
     * @param condition Whether the following statement should be executed
     */
   def forward(t: Int, condition: Boolean = true): Unit = {
-    scopet.push(t)
-    scopepos.push(0)
+    scopeTypes.push(t)
+    scopePositions.push(0)
     conditions.push(condition)
   }
 
@@ -63,7 +82,7 @@ class Scope(val printer: String => Unit, val inputGiver: () => String) {
     for (stack <- vars)
       if (stack.contains(name))
         return stack(name)
-    Entity.assign(Array(), this)
+    Entity.apply(Array(), this)
   }
 
   /**

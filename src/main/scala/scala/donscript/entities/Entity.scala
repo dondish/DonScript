@@ -12,11 +12,11 @@ import scala.donscript.Scope
 abstract class Entity(val args: Array[String], scope: Scope) extends Ordered[Entity] {
 
   def +(entity: Entity): Entity = {
-    Entity.assign(args ++ entity.args, scope)
+    Entity.apply(args ++ entity.args, scope)
   }
 
   def -(entity: Entity): Entity = {
-    Entity.assign(args.diff(entity.args), scope)
+    Entity.apply(args.diff(entity.args), scope)
   }
 
   override def equals(o: Any): Boolean = {
@@ -49,7 +49,7 @@ abstract class Entity(val args: Array[String], scope: Scope) extends Ordered[Ent
   * It's purpose is to assign args to the correct entity for easier manipulation of data
   */
 object Entity {
-  def assign(args: Array[String], scope: Scope): Entity = {
+  def apply(args: Array[String], scope: Scope): Entity = {
     args match {
       case Array(_) => Singleton(args, scope)
       case _ => DonArray(args, scope)

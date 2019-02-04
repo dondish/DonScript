@@ -32,54 +32,67 @@ class Tester extends FunSuite {
 
   test("Exit at scope -1") {
     val x: Interpreter = new Interpreter(x=>print(x), ()=>scala.io.StdIn.readLine())
-    x.interpret(";>> Should not print this!")
+    x.interpret(";>> Should not print this!;;")
   }
   test("Conditional") {
     val x: Interpreter = new Interpreter(x=>print(x), ()=>scala.io.StdIn.readLine())
 
     // Number Equality
 
-    x.interpret("?1 = 1;>> Equals1 V;;>> Equals1 X;;>> After if block")
+    x.interpret("?1 = 1;>> Equals1 V;;>> Equals1 X;;>> After If Block V;")
+    assert(x.scope.scope == 0 && x.scope.scopeTypes.top == 1 && x.scope.scopePositions.top == 0)
     x.interpret("?1 = 2;>> Equals2 X;;>> Equals2 V;;")
-    println(x.scope.scope, x.scope.scopet.top, x.scope.scopepos.top)
-
+    assert(x.scope.scope == 0 && x.scope.scopeTypes.top == 1 && x.scope.scopePositions.top == 0)
     x.interpret("?1 != 1;>> NEquals1 X;;>> NEquals1 V;;")
+    assert(x.scope.scope == 0 && x.scope.scopeTypes.top == 1 && x.scope.scopePositions.top == 0)
     x.interpret("?1 != 2;>> NEquals2 V;;>> NEquals2 X;;")
+    assert(x.scope.scope == 0 && x.scope.scopeTypes.top == 1 && x.scope.scopePositions.top == 0)
 
     x.interpret("?1 > 2;>> Bigthen1 X;;>> Bigthen1 V;;")
+    assert(x.scope.scope == 0 && x.scope.scopeTypes.top == 1 && x.scope.scopePositions.top == 0)
     x.interpret("?1 < 2;>> Bigthen2 V;;>> Bigthen2 X;;")
+    assert(x.scope.scope == 0 && x.scope.scopeTypes.top == 1 && x.scope.scopePositions.top == 0)
 
     // Array Equality
 
-    println(x.scope.scope, x.scope.scopet.top, x.scope.scopepos.top)
-    x.interpret("?1 2 3 = 1 2 3;>> Equals1 V;;>> Equals1 X;;")
-    x.interpret("?1 2 3 = 1 3 2;>> Equals2 X;;>> Equals2 V;;")
+    x.interpret("?1 2 3 = 1 2 3;>> Equals3 V;;>> Equals3 X;;")
+    assert(x.scope.scope == 0 && x.scope.scopeTypes.top == 1 && x.scope.scopePositions.top == 0)
+    x.interpret("?1 2 3 = 1 3 2;>> Equals4 X;;>> Equals4 V;;")
+    assert(x.scope.scope == 0 && x.scope.scopeTypes.top == 1 && x.scope.scopePositions.top == 0)
 
-    x.interpret("?1 2 3 != 1 2 3;>> Should not print this;;>> Should print this;;")
-    x.interpret("?1 2 3 != 1 3 2;>> Should print this;;>> Should not print this;;")
+    x.interpret("?1 2 3 != 1 2 3;>> NEquals3 X;;>> NEquals3 V;;")
+    assert(x.scope.scope == 0 && x.scope.scopeTypes.top == 1 && x.scope.scopePositions.top == 0)
+    x.interpret("?1 2 3 != 1 3 2;>> NEquals4 V;;>> NEquals4 X;;")
+    assert(x.scope.scope == 0 && x.scope.scopeTypes.top == 1 && x.scope.scopePositions.top == 0)
 
-    x.interpret("?1 2 3 > 2 1 3;>> Should not print this;;>> Should print this;;")
+    x.interpret("?1 2 3 > 2 1 3;>> Bigthen3 X;;>> Bigthen3 V;;")
+    assert(x.scope.scope == 0 && x.scope.scopeTypes.top == 1 && x.scope.scopePositions.top == 0)
 
-    x.interpret("?1 2 3 < 2 1 3;>> Should print this;;>> Should not print this;;")
+    x.interpret("?1 2 3 < 2 1 3;>> Bigthen4 V;;>> Bigthen4 X;;")
+    assert(x.scope.scope == 0 && x.scope.scopeTypes.top == 1 && x.scope.scopePositions.top == 0)
 
-    x.interpret("?1 2 >> 1 2 3;>> Should not print this;;>> Should print this;;")
-    x.interpret("?1 2 3 >> 1 2;>> Should print this;;>> Should not print this;;")
+    x.interpret("?1 2 >> 1 2 3;>> Include1 X;;>> Include1 V;;")
+    assert(x.scope.scope == 0 && x.scope.scopeTypes.top == 1 && x.scope.scopePositions.top == 0)
+    x.interpret("?1 2 3 >> 1 2;>> Include2 V;;>> Include2 X;;")
+    assert(x.scope.scope == 0 && x.scope.scopeTypes.top == 1 && x.scope.scopePositions.top == 0)
 
-    x.interpret("?1 2 3 << 1 2;>> Should not print this;;>> Should print this;;")
-    x.interpret("?1 2 << 1 2 3;>> Should print this;;>> Should not print this;;")
+    x.interpret("?1 2 3 << 1 2;>> Exclude1 X;;>> Exclude1 V;;")
+    assert(x.scope.scope == 0 && x.scope.scopeTypes.top == 1 && x.scope.scopePositions.top == 0)
+    x.interpret("?1 2 << 1 2 3;>> Exclude2 V;;>> Exclude2 X;;")
+    assert(x.scope.scope == 0 && x.scope.scopeTypes.top == 1 && x.scope.scopePositions.top == 0)
 
     // Nested Conditionals
 
     x.interpret(
       "?1 = 1;" +
         "?1 = 1;" +
-          ">> Should print this;" +
+          ">> Nested1 V;" +
         ";" +
-          ">> Should not print this;" +
+          ">> Nested1 X;" +
         ";" +
-        ">> Should not print this;" +
+        ">> Nested2 V;" +
       ";" +
-        ">> Should not print this;" +
+        ">> Nested2 X;" +
       ";")
   }
 }

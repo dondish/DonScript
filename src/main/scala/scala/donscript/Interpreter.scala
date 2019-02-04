@@ -19,7 +19,7 @@ class Interpreter(private val printer: String => Unit, private val inputGiver: (
     * @return an exit code
     */
   def interpret(code: String): Int = {
-    for (statement <- code.split("(?<!/)\\s*(?<!/);\\s*")) {
+    for (statement <- code.split("(?<!/);\\s*", -1).dropRight(if (code.endsWith(";")) 1 else 0)) {
       val result = Parser.parse(statement, scope, commands)
       if (result.exit != 0) {
         return result.exit

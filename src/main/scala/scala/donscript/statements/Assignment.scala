@@ -17,7 +17,7 @@ case class Assignment() extends Statement {
     if (args.isEmpty)
       return ParseResult(0)
     val name = args(0)
-    val value = Entity.assign(args.slice(1, args.length), scope)
+    val value = Entity(args.slice(1, args.length), scope)
     scope.setVar(name, value)
     ParseResult(0)
   }
