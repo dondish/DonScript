@@ -1,6 +1,6 @@
 package scala.donscript.entities
 
-import scala.donscript.Scope
+import scala.donscript.ScopeManager
 
 /**
   * While it is made of arrays the singleton's purpose is for value on value checking
@@ -8,7 +8,7 @@ import scala.donscript.Scope
  *
   * @param args the arguments it is made of
   */
-case class Singleton(override val args: Array[String], scope: Scope) extends Entity(args, scope) {
+case class Singleton(override val args: Array[String], scope: ScopeManager) extends Entity(args, scope) {
 
   def getValue: Either[Double, String] = {
     val decimal = """^(\d+\.?\d*)$""".r

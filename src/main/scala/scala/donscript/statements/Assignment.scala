@@ -1,6 +1,6 @@
 package scala.donscript.statements
 
-import scala.donscript.Scope
+import scala.donscript.ScopeManager
 import scala.donscript.entities.Entity
 
 /**
@@ -13,7 +13,7 @@ case class Assignment() extends Statement {
     * @param scope the scope
     * @return the result
     */
-  override def run(args: Array[String], scope: Scope): ParseResult = {
+  override def run(args: Array[String], scope: ScopeManager): ParseResult = {
     if (args.isEmpty)
       return ParseResult(0)
     val name = args(0)

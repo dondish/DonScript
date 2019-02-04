@@ -9,7 +9,7 @@ import scala.donscript.statements.Parser
   * @param inputGiver A function to fetch input like stdin
   */
 class Interpreter(private val printer: String => Unit, private val inputGiver: () => String) {
-  var scope = new Scope(printer, inputGiver)
+  var scope = new ScopeManager(printer, inputGiver)
   var commands: Map[String, Command] = Map[String, Command]()
 
   /**

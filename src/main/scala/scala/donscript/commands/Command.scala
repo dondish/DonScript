@@ -1,6 +1,6 @@
 package scala.donscript.commands
 
-import scala.donscript.Scope
+import scala.donscript.ScopeManager
 import scala.donscript.statements.ParseResult
 
 /**
@@ -14,5 +14,5 @@ trait Command {
     * @param scope the scope
     * @return Just like a statement, a command returns a result to see if to stop interpreting or not
     */
-  def execute(args: Array[String], scope: Scope): ParseResult
+  def execute(args: Array[String], scope: ScopeManager): ParseResult
 }

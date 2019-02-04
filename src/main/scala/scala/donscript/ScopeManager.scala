@@ -8,7 +8,7 @@ import scala.donscript.entities.Entity
   * @param printer stdout
   * @param inputGiver stdin
   */
-class Scope(val printer: String => Unit, val inputGiver: () => String) {
+class ScopeManager(val printer: String => Unit, val inputGiver: () => String) {
   /**
     * The scope types
     */

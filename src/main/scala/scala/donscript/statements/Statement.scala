@@ -1,6 +1,6 @@
 package scala.donscript.statements
 
-import scala.donscript.Scope
+import scala.donscript.ScopeManager
 
 /**
   * A statement is the core of DonScript
@@ -14,5 +14,5 @@ trait Statement {
     * @param scope the current scope
     * @return the results from running
     */
-  def run(args: Array[String], scope: Scope): ParseResult
+  def run(args: Array[String], scope: ScopeManager): ParseResult
 }

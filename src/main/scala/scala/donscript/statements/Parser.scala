@@ -2,7 +2,7 @@ package scala.donscript.statements
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
-import scala.donscript.Scope
+import scala.donscript.ScopeManager
 import scala.donscript.commands.Command
 
 /**
@@ -14,7 +14,7 @@ object Parser {
     * @param statement the statement given
     * @return amount to change the scope
     */
-  def parse(statement: String, scope: Scope,  commands: Map[String, Command]): ParseResult = {
+  def parse(statement: String, scope: ScopeManager, commands: Map[String, Command]): ParseResult = {
     if (statement.length == 0) {
       return ParseResult(if (scope.backward()) 1 else 0)
     }
@@ -66,7 +66,7 @@ object Parser {
     * @param scope the scope
     * @return
     */
-  def parseArgs(args: Array[String], scope: Scope): Array[String] = {
+  def parseArgs(args: Array[String], scope: ScopeManager): Array[String] = {
     val arrayBuffer: ArrayBuffer[String] = new ArrayBuffer[String]()
     for (arg <- args) {
       if (arg.startsWith(":")) {

@@ -1,5 +1,6 @@
 package scala.donscript.statements
-import scala.donscript.Scope
+
+import scala.donscript.ScopeManager
 import scala.donscript.entities.Entity
 
 /**
@@ -12,7 +13,7 @@ case class Conditional() extends Statement {
     * @param scope the current scope
     * @return the results from running
     */
-  override def run(args: Array[String], scope: Scope): ParseResult = {
+  override def run(args: Array[String], scope: ScopeManager): ParseResult = {
     if (args.isEmpty) {
       scope.forward(2, condition = false)
       return ParseResult(0)

@@ -1,6 +1,6 @@
 package scala.donscript.entities
 
-import scala.donscript.Scope
+import scala.donscript.ScopeManager
 
 
 
@@ -9,7 +9,7 @@ import scala.donscript.Scope
   *
   * @param args the arguments it is made of
   */
-abstract class Entity(val args: Array[String], scope: Scope) extends Ordered[Entity] {
+abstract class Entity(val args: Array[String], scope: ScopeManager) extends Ordered[Entity] {
 
   def +(entity: Entity): Entity = {
     Entity.apply(args ++ entity.args, scope)
@@ -49,7 +49,7 @@ abstract class Entity(val args: Array[String], scope: Scope) extends Ordered[Ent
   * It's purpose is to assign args to the correct entity for easier manipulation of data
   */
 object Entity {
-  def apply(args: Array[String], scope: Scope): Entity = {
+  def apply(args: Array[String], scope: ScopeManager): Entity = {
     args match {
       case Array(_) => Singleton(args, scope)
       case _ => DonArray(args, scope)
