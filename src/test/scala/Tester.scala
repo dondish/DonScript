@@ -8,7 +8,7 @@ import scala.donscript.entities.{DonArray, Singleton}
 @RunWith(classOf[JUnitRunner])
 class Tester extends FunSuite {
   test("Assignment and Injection") {
-    val x: Interpreter = new Interpreter(x=>println(x), ()=>scala.io.StdIn.readLine())
+    val x: Interpreter = new Interpreter(print, scala.io.StdIn.readLine)
     x.interpret(":as 1") // basic assignment to a singleton
     assert(x.scope.getVar("as").getClass == classOf[Singleton] && x.scope.getVar("as").args.sameElements(Array("1")))
     x.interpret(":as 1 2 3") // multiple values
@@ -26,16 +26,16 @@ class Tester extends FunSuite {
   }
 
   test("Printing") {
-    val x: Interpreter = new Interpreter(x=>print(x), ()=>scala.io.StdIn.readLine())
+    val x: Interpreter = new Interpreter(print, scala.io.StdIn.readLine)
      x.interpret(":as Testing Variable Printing!;> :as /n;>> :as")
   }
 
   test("Exit at scope -1") {
-    val x: Interpreter = new Interpreter(x=>print(x), ()=>scala.io.StdIn.readLine())
+    val x: Interpreter = new Interpreter(print, scala.io.StdIn.readLine)
     x.interpret(";>> Should not print this!;;")
   }
   test("Conditional") {
-    val x: Interpreter = new Interpreter(x=>print(x), ()=>scala.io.StdIn.readLine())
+    val x: Interpreter = new Interpreter(print, scala.io.StdIn.readLine)
 
     // Number Equality
 
